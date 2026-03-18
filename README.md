@@ -83,6 +83,19 @@ curl http://localhost:8000/health
 
 Expected: `{"status":"ok","database":"ok","redis":"ok"}`.
 
+**Test ingest and transactions:**
+
+```bash
+curl -X POST "http://localhost:8000/ingest" -F "file=@backend/tests/fixtures/sample_chase.csv" -F "bank_type=chase"
+curl "http://localhost:8000/transactions?limit=10"
+```
+
+### 5. Run migrations
+
+```bash
+docker-compose run --rm api alembic upgrade head
+```
+
 ### Run backend only (no Docker)
 
 1. Create a PostgreSQL database and a Redis instance.
@@ -106,7 +119,8 @@ Expected: `{"status":"ok","database":"ok","redis":"ok"}`.
 ```
 StatementWrapped/
 ├── backend/                 # FastAPI application
-│   ├── main.py              # App entry, health, lifespan
+│   ├── main.py              # App entry, health, lifespan, CORS
+│   ├── database.py          # Engine, session, get_db dependency
 │   ├── requirements.txt
 │   ├── Dockerfile
 │   ├── models/              # SQLAlchemy models
@@ -132,7 +146,7 @@ See `.env.example` for local/Docker defaults.
 ## Development
 
 - **API reload:** When running without Docker, use `uvicorn main:app --reload` so the server restarts on code changes.
-- **Migrations:** Alembic is used for DB migrations; run from `backend/` (see Day 2+ setup).
+- **Migrations:** Alembic; run `docker-compose run --rm api alembic upgrade head` or `cd backend && PYTHONPATH=. alembic upgrade head`. New migrations: `alembic revision --autogenerate -m "description"`.
 - **Adding a bank:** Implement a parser in `backend/parsers/` that conforms to the normalizer contract and register it in the bank registry.
 
 ## Contributing

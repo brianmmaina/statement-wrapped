@@ -2,15 +2,14 @@ import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from redis.asyncio import Redis
 from sqlalchemy import text
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://statementwrapped:statementwrapped@localhost:5432/statementwrapped")
+from database import async_session, engine
+from routers import ingest, transactions
+
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
-
-engine = create_async_engine(DATABASE_URL, echo=False)
-async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 redis_client: Redis | None = None
 
 
@@ -30,6 +29,17 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="StatementWrapped", version="0.1.0", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(ingest.router)
+app.include_router(transactions.router)
 
 
 @app.get("/health")
