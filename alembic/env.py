@@ -15,7 +15,18 @@ target_metadata = Base.metadata
 
 
 def get_url() -> str:
+    # On Railway, private *.railway.internal fails to resolve; must use DATABASE_PUBLIC_URL.
     url = os.getenv("DATABASE_URL", "postgresql+asyncpg://statementwrapped:statementwrapped@localhost:5432/statementwrapped")
+    if ".railway.internal" in url:
+        url = os.getenv("DATABASE_PUBLIC_URL") or ""
+        if not url:
+            raise RuntimeError(
+                "DATABASE_URL uses Railway private host (*.railway.internal). "
+                "Fix: PostgreSQL → Settings → enable Public Networking. "
+                "Then add DATABASE_PUBLIC_URL (reference) or override DATABASE_URL with public URL."
+            )
+    else:
+        url = os.getenv("DATABASE_PUBLIC_URL") or url
     if url.startswith("postgresql+asyncpg://"):
         return url.replace("postgresql+asyncpg://", "postgresql://", 1)
     return url
