@@ -53,7 +53,7 @@ CATEGORIZATION_SCHEMA = {
 RULE_PATTERNS: list[tuple[re.Pattern, str]] = [
     (re.compile(r"\b(direct deposit|payment received|payroll|salary|deposit|transfer in|refund)\b", re.I), "income"),
     (re.compile(r"\b(netflix|spotify|hulu|disney\+|hbo|paramount|peacock)\b", re.I), "subscriptions"),
-    (re.compile(r"\b(whole foods|trader joe|safeway|kroger|albertsons|publix|wegmans)\b", re.I), "groceries"),
+    (re.compile(r"\b(whole foods|trader joe|safeway|kroger|albertsons|publix|wegmans|grocery store|grocery)\b", re.I), "groceries"),
     (re.compile(r"\b(amazon|target|walmart|costco|best buy|ebay)\b", re.I), "shopping"),
     (re.compile(r"\b(starbucks|chipotle|mcdonald|burger king|taco bell|uber eats|doordash|grubhub)\b", re.I), "dining"),
     (re.compile(r"\b(uber|lyft|shell|chevron|exxon|mobil|bp\b|gas station)\b", re.I), "transport"),
