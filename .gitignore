@@ -37,7 +37,7 @@ yarn-error.log*
 Thumbs.db
 
 # Alembic
-backend/alembic/versions/*.pyc
+alembic/versions/*.pyc
 
 # Testing / coverage
 .coverage
@@ -47,3 +47,11 @@ htmlcov/
 
 # Docker (optional; uncomment if you don't want local override tracked)
 # docker-compose.override.yml
+
+# Docs — keep only README.md in repo
+RESUME_METRICS.md
+ARCHITECTURE.md
+COMMITS.md
+DECISIONS.md
+WALKTHROUGH.md
+docs/
