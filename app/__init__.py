@@ -1,0 +1,1 @@
+"""StatementWrapped FastAPI application."""

@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap");
+
+:root {
+  --color-background: #fafaf9;
+  --color-surface: #ffffff;
+  --color-border: #e8e5e0;
+  --color-border-subtle: #f0ede8;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #4a4540;
+  --color-text-tertiary: #5c5650;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-accent-subtle: #eff6ff;
+  --color-success: #059669;
+  --color-success-subtle: #ecfdf5;
+  --color-warning: #d97706;
+  --color-warning-subtle: #fffbeb;
+  --color-error: #dc2626;
+
+  /* Category colors — deliberate, not default chart palette */
+  --color-cat-dining: #e85d4a;
+  --color-cat-groceries: #2d9b6f;
+  --color-cat-transport: #4a7cf7;
+  --color-cat-subscriptions: #9b59b6;
+  --color-cat-entertainment: #f59e0b;
+  --color-cat-shopping: #ec4899;
+  --color-cat-utilities: #64748b;
+  --color-cat-other: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  line-height: 1.5;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 1279px) {
+  .charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .stat-tiles {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 639px) {
+  .ai-summary-layout {
+    flex-direction: column !important;
+  }
+}
+
+/* How It Works — responsive card grid */
+@media (max-width: 959px) {
+  .how-it-works-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .how-it-works-cards {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
+/* Hero — responsive layout */
+@media (max-width: 959px) {
+  .hero-section {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .hero-cluster-wrapper {
+    justify-content: center !important;
+    order: 2;
+  }
+  .hero-cluster-wrapper > div {
+    max-width: 420px !important;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 639px) {
+  .hero-cluster-wrapper > div {
+    max-width: 100% !important;
+  }
+  .hero-screenshot-cluster {
+    min-height: 360px !important;
+  }
+}
+
+@keyframes ai-summary-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Decorative background — no layout impact */
+.decorative-background {
+  contain: layout style paint;
+}

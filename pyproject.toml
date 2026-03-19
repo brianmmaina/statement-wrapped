@@ -1,0 +1,20 @@
+[project]
+name = "statementwrapped"
+version = "0.1.0"
+description = "Bank statement analysis application"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-v --tb=short"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/__init__.py"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
