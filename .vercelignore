@@ -1,0 +1,9 @@
+# Deploy frontend only - backend runs on Railway
+app/
+*.py
+pyproject.toml
+requirements.txt
+alembic/
+tests/
+Dockerfile
+docker-compose.yml
