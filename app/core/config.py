@@ -17,9 +17,14 @@ if ".railway.internal" in _raw_db_url:
             "Then in API service Variables, add DATABASE_PUBLIC_URL (reference from Postgres) "
             "or override DATABASE_URL with the public connection string."
         )
-    DATABASE_URL = _public
+    _db_url = _public
 else:
-    DATABASE_URL = os.getenv("DATABASE_PUBLIC_URL") or _raw_db_url
+    _db_url = os.getenv("DATABASE_PUBLIC_URL") or _raw_db_url
+
+# App uses create_async_engine; Railway/others often give postgresql:// (sync). Normalize to +asyncpg.
+if _db_url.startswith("postgresql://") and "+asyncpg" not in _db_url:
+    _db_url = _db_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+DATABASE_URL = _db_url
 
 # redis connection url; used for health check and analysis caching.
 # On Railway, prefer REDIS_PUBLIC_URL when REDIS_URL uses *.railway.internal.
